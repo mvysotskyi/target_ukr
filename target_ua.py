@@ -22,3 +22,35 @@ def generate_grid():
             result.append(letter)
 
     return result
+
+def make_pair(dict_line):
+    """
+    Function return word and his part of language.
+    >>> make_pair("авдіювати /v1.cf.advp :imperf:ua_2019")
+    ('авдіювати', 'verb')
+    >>> make_pair("авантюрниця /n10.p1.ko.<")
+    ('авантюрниця', 'noun')
+    """
+    dict_line = dict_line.split(" ")[0:2]
+    if len(dict_line) <= 1:
+        return ()
+
+    word, language_part = dict_line
+
+    if language_part.startswith("noninfl"):
+        return ()
+
+    if language_part.startswith("noun") or\
+    language_part.startswith("/n") or language_part.startswith("n"):
+        return (word, "noun")
+
+    if language_part.startswith("v") or language_part.startswith("/v"):
+        return (word, "verb")
+
+    if language_part.startswith("adj") or language_part.startswith("/adj"):
+        return (word, "adjective")
+
+    if language_part.startswith("adv") or language_part.startswith("/adv"):
+        return (word, "adverb")
+
+    return ()
