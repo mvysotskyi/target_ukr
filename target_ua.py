@@ -13,7 +13,6 @@ def generate_grid():
     alphabet = 'а, б, в, г, ґ, д, е, є, ж, з, и, і, ї\
 , й, к, л, м, н, о, п, р, с, т, у, ф, х, ц, ч, ш, щ, ь, ю, я'
     letters = alphabet.split(", ")
-    # print(letters)
     result = []
 
     while len(result) < 5:
@@ -87,3 +86,35 @@ def check_user_words(user_words, language_part, letters, dict_of_words):
     valid_user_words = [
         word for word in user_words if (word in valid_dict_words) and (word[0] in letters)]
     return valid_user_words, [word for word in valid_dict_words if word not in valid_user_words]
+
+
+def main():
+    """
+    Main game function.
+    """
+    language_parts = (('noun', "іменників"), ('verb', "дієслів"),\
+    ('adjective', "прикметників"), ('adverb', "прислівників"))
+    game_field = generate_grid()
+
+    language_part = choice(language_parts)
+
+    print(f"Ігрове поле: {game_field}")
+    print(f"Введіть щонайменше 5 {language_part[1]},\n\
+які починаються із букв ігрового поля: ")
+
+    user_words = []
+    while inp := input(">>> "):
+        user_words.append(inp)
+
+    if len(user_words) < 5:
+        print("Ви ввели менше 5 слів. Бувайте!")
+
+    dict_words = get_words("base.lst", game_field)
+    correct_words, missed_words = check_user_words(user_words, language_part[0],
+    game_field, dict_words)
+
+    print(f"Ви ввели правильно: {', '.join(correct_words)}")
+    print(f"Ви пропустили: {', '.join(missed_words)}")
+
+if __name__ == "__main__":
+    main()
