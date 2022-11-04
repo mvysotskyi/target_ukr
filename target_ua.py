@@ -54,3 +54,24 @@ def make_pair(dict_line):
         return (word, "adverb")
 
     return ()
+
+def get_words(filename, letters):
+    """
+    Reads and sorts words from dictionary.
+    >>> get_words("base.lst", [])
+    []
+    """
+    words = []
+    with open(filename, "r", encoding="utf-8") as file:
+        lines = file.readlines()
+        for line in lines:
+            pair = make_pair(line.lower().strip())
+
+            if not pair:
+                continue
+            if len(pair[0]) > 5 or (pair[0][0].lower() not in letters):
+                continue
+
+            words.append(pair)
+
+    return words
