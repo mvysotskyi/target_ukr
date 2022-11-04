@@ -75,3 +75,15 @@ def get_words(filename, letters):
             words.append(pair)
 
     return words
+
+def check_user_words(user_words, language_part, letters, dict_of_words):
+    """
+    Checks user types words.
+    >>> check_user_words(["предмет", "проданий"], "noun"\
+    , ["п"], [("предмет", "noun"), ("поле", "noun")])
+    (['предмет'], ['поле'])
+    """
+    valid_dict_words = [word[0] for word in dict_of_words if word[1] == language_part]
+    valid_user_words = [
+        word for word in user_words if (word in valid_dict_words) and (word[0] in letters)]
+    return valid_user_words, [word for word in valid_dict_words if word not in valid_user_words]
